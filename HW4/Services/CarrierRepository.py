@@ -1,0 +1,25 @@
+from HW4.Interfaces.ICarrierRepo import ICarrierRepo
+from HW4.Models.Carrier import Carrier
+
+
+class CarrierRepository(ICarrierRepo):
+
+    __carrier_repository = None
+
+    def __init__(self):
+        self.__carrier = [Carrier(1, 1)]
+
+    @staticmethod
+    def get_carrier_repository() -> 'CarrierRepository':
+        if CarrierRepository.__carrier_repository is None:
+            CarrierRepository.__carrier_repository = CarrierRepository()
+        return CarrierRepository.__carrier_repository
+
+    def read(self, id_: int) -> Carrier:
+        for carrier in self.__carrier:
+            if carrier.get_id() == id_:
+                return carrier
+        raise Exception('A carrier with this ID not found!')
+
+
+
